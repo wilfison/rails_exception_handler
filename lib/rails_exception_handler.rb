@@ -30,8 +30,8 @@ module RailsExceptionHandler
     yield configuration
     return unless configuration.activate?
 
-    unless Rails.configuration.middleware.class == ActionDispatch::MiddlewareStack && Rails.configuration.middleware.include?(RailsExceptionHandler)
-      Rails.configuration.middleware.use(RailsExceptionHandler::Middleware)
+    unless Rails.configuration.middleware.class == ActionDispatch::MiddlewareStack && Rails.configuration.middleware.include?(Middleware)
+      Rails.configuration.middleware.use(Middleware)
     end
 
 
