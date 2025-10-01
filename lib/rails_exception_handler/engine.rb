@@ -1,4 +1,4 @@
-class RailsExceptionHandler
+module RailsExceptionHandler
   class Engine < Rails::Engine
   end
 end

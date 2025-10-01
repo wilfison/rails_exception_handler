@@ -8,17 +8,18 @@ require 'rails_exception_handler/engine'
 require 'rails_exception_handler/catcher'
 require 'rails_exception_handler/fake_session'
 
-class RailsExceptionHandler
-
-  def initialize(app)
-    @app = app
-  end
-
-  def call(env)
-    @app.call(env)
-  rescue Exception => e
-    raise e unless RailsExceptionHandler.configuration.activate?
-    Handler.new(env, e).handle_exception
+module RailsExceptionHandler
+  class Middleware
+    def initialize(app)
+      @app = app
+    end
+  
+    def call(env)
+      @app.call(env)
+    rescue Exception => e
+      raise e unless RailsExceptionHandler.configuration.activate?
+      Handler.new(env, e).handle_exception
+    end
   end
 
   def self.configuration
@@ -30,7 +31,7 @@ class RailsExceptionHandler
     return unless configuration.activate?
 
     unless Rails.configuration.middleware.class == ActionDispatch::MiddlewareStack && Rails.configuration.middleware.include?(RailsExceptionHandler)
-      Rails.configuration.middleware.use(RailsExceptionHandler)
+      Rails.configuration.middleware.use(RailsExceptionHandler::Middleware)
     end
 
 
@@ -40,7 +41,7 @@ class RailsExceptionHandler
       :all
     end
     Rails.configuration.consider_all_requests_local = false
-    require File.expand_path(File.dirname(__FILE__)) + '/patch/show_exceptions.rb'
+    require File.expand_path(File.dirname(__FILE__)) + '/patch/show_exceptions'
     configuration.run_callback
   end
 end

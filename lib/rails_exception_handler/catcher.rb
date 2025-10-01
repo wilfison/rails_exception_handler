@@ -1,4 +1,4 @@
-class RailsExceptionHandler
+module RailsExceptionHandler
 
   def self.catch(&block)
     begin
