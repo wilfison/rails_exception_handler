@@ -1,3 +1,13 @@
+require 'net/http'
+
+require 'rails_exception_handler/configuration'
+require 'rails_exception_handler/handler'
+require 'rails_exception_handler/parser'
+require 'rails_exception_handler/storage'
+require 'rails_exception_handler/engine'
+require 'rails_exception_handler/catcher'
+require 'rails_exception_handler/fake_session'
+
 class RailsExceptionHandler
 
   def initialize(app)
@@ -40,11 +50,3 @@ end
 class RailsExceptionHandler::Mongoid
 end
 
-require 'rails_exception_handler/configuration.rb'
-require 'rails_exception_handler/handler.rb'
-require 'rails_exception_handler/parser.rb'
-require 'rails_exception_handler/storage.rb'
-require 'rails_exception_handler/engine.rb'
-require 'rails_exception_handler/catcher.rb'
-require 'rails_exception_handler/fake_session.rb'
-require 'net/http'
